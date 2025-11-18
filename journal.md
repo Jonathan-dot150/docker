@@ -7,4 +7,6 @@ Jonathan :
 - générer un plan d'exploration quelle serait les objectifs , et les échéancier
 
 Ryan:
+- Rechercher de manière approfondie les concepts clés.
+- Incorporation de la virtualisation avec un service linux
 
