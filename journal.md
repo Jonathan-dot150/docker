@@ -5,6 +5,8 @@ Jonathan :
 - Explorer différente option technologique 
 - Faire un tableau des avantages , des limites et des domaine d'application des technologie
 - générer un plan d'exploration quelle serait les objectifs , et les échéancier
+- Decourvrir les avantages et desavantages
+- Quelles sont les possibilites avec l application
 
 Ryan:
 - Rechercher de manière approfondie les concepts clés.
