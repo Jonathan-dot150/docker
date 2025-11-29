@@ -12,3 +12,9 @@ Ryan:
 - Rechercher de manière approfondie les concepts clés.
 - Incorporation de la virtualisation avec un service linux
 
+semaine 3:
+
+Jonathan:
+-Commencer le document de rapport
+
+Ryan:
