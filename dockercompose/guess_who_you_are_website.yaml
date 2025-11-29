@@ -1,0 +1,26 @@
+# 1 - Service
+services:
+# 2 - le nom du service souhaitee (N'importe quoi)
+    web_experience:
+    # 3 - iamge/service reel
+        image: nginx:latest
+    # 4 - nom du container (n'importe quoi)
+        container_name: web_experiences
+    # 5 - Attacher avec le dossier reel
+        volumes:
+            - /opt/web_experiences/html:/usr/share/nginx/html
+    # 6 - Mapper le port externe et interne
+        ports:
+            - 8082:80
+    # 7 - Connexion locale NAT
+        networks:
+            - lab_net
+    # 8 - Redemarrer en cas d'erreur
+        restart: always
+
+volumes:
+    site_data:
+
+
+networks:
+    lab_net:
