@@ -3,6 +3,7 @@
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:Inter,Segoe UI,Arial;background:linear-gradient(180deg,#07101a,#09202a);color:#e6eef6}
+
 .container{display:grid;grid-template-columns:300px 1fr;gap:20px;padding:28px;min-height:100vh}
 .history{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
 .history h3{margin:0 0 8px 0;color:var(--muted)}
