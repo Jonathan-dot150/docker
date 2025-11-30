@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Imperial+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/fruit.css">
     <script src="js/fruit.js"></script>
+    <script src="js/client.js"></script>
     <title>Document</title>
 </head>
 
@@ -23,10 +24,11 @@
         </ul>
     </nav>
     <div id="_img_entree_page_accueil">
-        <img src="./img/Affichage_accueil/0_1.png" alt="Image_accueil">
+        <img src="https://giffiles.alphacoders.com/156/15666.gif" alt="Image_accueil">
     </div>
     <nav class="nav_second">
-        <a id="logo_name" href="./index.html">Alexidra <img id="logo" src="./img/logo/delifruit_logo.ico" alt="logo"></a>
+        <a id="logo_name" href="./index.html">Alexidra <img id="logo" src="./img/logo/delifruit_logo.ico"
+                alt="logo"></a>
         <ul>
             <li><a href="./index.html">Accueil</a></li>
             <li><a href="./pages/bots.html">ChatBots</a></li>
@@ -52,7 +54,30 @@
                 <p>Rentrez vos identifiants, repondez aux questions du prompt et Alexidra s'occupera du reste.</p>
             </div>
             <article>
-
+                <!-- section historique -->
+                <aside class="history" id="history">
+                    <h3>Historique</h3>
+                    <ul id="history-list"></ul>
+                </aside>
+                <!-- section chat -->
+                <section class="chat">
+                    <div>
+                        <h1>Alexidra</h1>
+                        <p class="sub" id="sub">Posez une question — réponses en streaming</p>
+                    </div>
+                <!-- section chat message -->
+                    <div id="messages" class="messages"></div>
+                
+                <!-- cadre message envoi -->
+                    <form id="chat-form" class="composer">
+                        <textarea id="question" placeholder="Écrire votre message..." required></textarea>
+                        <div class="controls">
+                            <!-- Envoyer -->
+                            <button type="submit">Envoyer</button>
+                            <button type="button" id="clear">Effacer</button>
+                        </div>
+                    </form>
+                </section>
             </article>
         </section>
 

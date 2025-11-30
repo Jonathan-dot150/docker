@@ -104,10 +104,11 @@ a:hover {
 
 #_img_entree_page_accueil img {
     width: 100%;
+    height: 300px;
     margin: 0;
     display: block;
     object-fit: cover;
-    animation: heightAnimationAccueil 5s ease-in-out forwards;
+    /* animation: heightAnimationAccueil 5s ease-in-out forwards; */
 }
 
 .image_entree img {
@@ -144,8 +145,8 @@ a:hover {
     width: 100%;
     margin: 0;
     display: block;
-    object-fit: cover;
-    animation: heightAnimationMagasinez 5s ease-in-out forwards;
+    /* object-fit: cover; */
+    /* animation: heightAnimationMagasinez 5s ease-in-out forwards; */
 }
 
 
@@ -179,9 +180,11 @@ a:hover {
 
 #section_1 article {
     border-radius: 15px;
+    display: grid;
+    grid-template-columns: 1fr 3.5fr;
     justify-self: center;
-    background-color: black;
-    width: 1200px;
+    background-color: rgba(5, 5, 5, 0.63);
+    width: 1600px;
     height: 600px;
 }
 
@@ -232,6 +235,91 @@ a:hover {
     /* éviter que flex ne réduise la boîte */
     flex: 0 0 auto;
 }
+
+/* SECTION 1.1 AI -------------------------------------------- */
+
+#section_1 .history{
+    /* float: left; */
+    background:var(--card);
+    padding:16px;
+    /* width: 300px; */
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(2,6,23,0.6);
+    /* height: 600px; */
+}
+#section_1 .history h3{margin:0 0 8px 0;color:var(--muted)}
+#section_1 .history ul{list-style:none;padding:0;margin:0;max-height:80vh;overflow:auto}
+#section_1 .history li{padding:8px;border-radius:8px;margin-bottom:6px;background:var(--glass);cursor:pointer}
+
+#section_1 .chat div:first-of-type {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    width: 1000px;
+    border: none;
+    /* width: 1200px; */
+}
+
+#section_1 .chat div:first-of-type h1 {
+    text-align: left;
+}
+
+#section_1 .chat div:first-of-type #sub {
+    font-size: 1.5em;
+    border: none;
+    text-align: right;
+}
+
+#section_1 .chat div:first-of-type #sub:hover {
+    background-color: rgba(5, 5, 5, 0.63);
+}
+
+
+#section_1 .chat{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    padding:20px;
+    border-radius:12px;
+}
+#section_1 .chat div:first-of-type{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+
+#section_1 .chat .sub{
+    color:var(--muted);
+}
+
+
+#section_1 .messages{
+    margin-top:18px;
+    max-height:65vh;
+    overflow:auto;
+    padding:8px;
+}
+
+#section_1 .msg{padding:12px;border-radius:10px;margin-bottom:10px;max-width:80%}
+#section_1 .msg.user{background:rgba(124,58,237,0.12);align-self:flex-end}
+#section_1 .msg.ai{background:rgba(255,255,255,0.03)}
+
+#section_1 .composer {
+    display:flex;
+    flex-direction:column;
+    margin-top:12px;
+    width: 1000px;
+}
+#section_1 #question {
+    width: 80%;
+    min-height:80px;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.04);
+    background:transparent;
+    color:inherit;
+}
+#section_1 .controls{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+#section_1 .controls button{padding:10px 14px;border-radius:8px;border:0;background:var(--accent);color:white;cursor:pointer}
+#section_1 .controls button#clear{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+
 
 /* SECTION 2 -------------------------------------------- */
 

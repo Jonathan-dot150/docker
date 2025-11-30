@@ -34,51 +34,51 @@ data.messages.forEach(m=> addMessage(m.role, m.content));
 
 
 function addMessage(role, text){
-const div = document.createElement('div');
-div.className = 'msg ' + (role==='user'? 'user':'ai');
-div.textContent = text;
-msgContainer.appendChild(div);
-msgContainer.scrollTop = msgContainer.scrollHeight;
+    const div = document.createElement('div');
+    div.className = 'msg ' + (role==='user'? 'user':'ai');
+    div.textContent = text;
+    msgContainer.appendChild(div);
+    msgContainer.scrollTop = msgContainer.scrollHeight;
 }
 
 
 form.addEventListener('submit', async (e)=>{
-e.preventDefault();
-const question = questionEl.value.trim();
-if(!question) return;
+    e.preventDefault();
+    const question = questionEl.value.trim();
+    if(!question) return;
 
 
-addMessage('user', question);
-questionEl.value='';
+    addMessage('user', question);
+    questionEl.value='';
 
 
-// open websocket for streaming
-const ws = new WebSocket((location.protocol==='https:'?'wss://':'ws://') + location.host + WS_PATH);
+    // open websocket for streaming
+    const ws = new WebSocket((location.protocol==='https:'?'wss://':'ws://') + location.host + WS_PATH);
 
 
-ws.onopen = ()=>{
-ws.send(JSON.stringify({question}));
-}
+    ws.onopen = ()=>{
+        ws.send(JSON.stringify({question}));
+    }
 
 
-let aiDiv = document.createElement('div');
-aiDiv.className = 'msg ai';
-aiDiv.textContent = '';
-msgContainer.appendChild(aiDiv);
+    let aiDiv = document.createElement('div');
+    aiDiv.className = 'msg ai';
+    aiDiv.textContent = '';
+    msgContainer.appendChild(aiDiv);
 
 
-ws.onmessage = (ev)=>{
-// expects JSON chunks: {type: 'chunk', text: '...'} or {type: 'done', conversation_id: 1}
-try{
-const payload = JSON.parse(ev.data);
-if(payload.type === 'chunk'){
-aiDiv.textContent += payload.text;
-msgContainer.scrollTop = msgContainer.scrollHeight;
-} else if(payload.type === 'done'){
-ws.close();
-loadHistory();
-}
-}catch(err){ console.error('invalid chunk', err)}
+    ws.onmessage = (ev)=>{
+    // expects JSON chunks: {type: 'chunk', text: '...'} or {type: 'done', conversation_id: 1}
+    try{
+        const payload = JSON.parse(ev.data);
+        if(payload.type === 'chunk'){
+            aiDiv.textContent += payload.text;
+            msgContainer.scrollTop = msgContainer.scrollHeight;
+        } else if(payload.type === 'done'){
+            ws.close();
+            loadHistory();
+        }
+    }catch(err){ console.error('invalid chunk', err)}
 }
 
 
