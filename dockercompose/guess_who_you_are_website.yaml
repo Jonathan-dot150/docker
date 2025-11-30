@@ -1,25 +1,62 @@
 # 1 - Service
 services:
+    ollama:
+        image: ollama/ollama:latest
+        container_name: ollama
+        ports:
+           - "11434:11434"
+        volumes:
+           - ollama-data:/root/.ollama
+        restart: unless-stopped
+        networks:
+           - lab_net
+
+
+    others:
+        build: ../others
+        container_name: fastapi-others
+        ports:
+           - "5001:5000"
+        environment:
+           - DATABASE_URL=sqlite:///./data/chat.db
+           - OLLAMA_URL=http://ollama:11434
+        volumes:
+           - others-data:/app/data
+        depends_on:
+           - ollama
+        networks:
+           - lab_net
+
+
+
 # 2 - le nom du service souhaitee (N'importe quoi)
     web_experience:
-    # 3 - iamge/service reel
-        image: nginx:latest
+    # 3 - image/service reel
+        image: nginx:stable
     # 4 - nom du container (n'importe quoi)
         container_name: web_experiences
     # 5 - Attacher avec le dossier reel
         volumes:
-            - /opt/web_experiences/html:/usr/share/nginx/html
+            - ../html:/usr/share/nginx/html:ro
+            - ../nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     # 6 - Mapper le port externe et interne
         ports:
-            - 8082:80
-    # 7 - Connexion locale NAT
+            - "8082:80"
+    # 7 - Dependances OTHERS
+        depends_on:
+            - others
+    # 8 - Connexion locale NAT
         networks:
             - lab_net
-    # 8 - Redemarrer en cas d'erreur
+    # 9 - Redemarrer en cas d'erreur
         restart: always
 
+
+
+
 volumes:
-    site_data:
+    ollama-data:
+    others-data:
 
 
 networks:
