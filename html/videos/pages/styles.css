@@ -1,0 +1,23 @@
+:root{
+--bg:#0f1724; --card:#0b1220; --muted:#94a3b8; --accent:#7c3aed; --glass: rgba(255,255,255,0.03);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Segoe UI,Arial;background:linear-gradient(180deg,#07101a,#09202a);color:#e6eef6}
+
+.container{display:grid;grid-template-columns:300px 1fr;gap:20px;padding:28px;min-height:100vh}
+.history{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+.history h3{margin:0 0 8px 0;color:var(--muted)}
+.history ul{list-style:none;padding:0;margin:0;max-height:80vh;overflow:auto}
+.history li{padding:8px;border-radius:8px;margin-bottom:6px;background:var(--glass);cursor:pointer}
+.chat{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:20px;border-radius:12px}
+.chat header{display:flex;justify-content:space-between;align-items:flex-start}
+.chat .sub{color:var(--muted);margin-top:6px}
+.messages{margin-top:18px;max-height:65vh;overflow:auto;padding:8px}
+.msg{padding:12px;border-radius:10px;margin-bottom:10px;max-width:80%}
+.msg.user{background:rgba(124,58,237,0.12);align-self:flex-end}
+.msg.ai{background:rgba(255,255,255,0.03)}
+.composer{display:flex;flex-direction:column;margin-top:12px}
+.composer textarea{min-height:80px;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+.controls{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+.controls button{padding:10px 14px;border-radius:8px;border:0;background:var(--accent);color:white;cursor:pointer}
+.controls button#clear{background:transparent;border:1px solid rgba(255,255,255,0.06)}

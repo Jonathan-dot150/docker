@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Assistant IA — Chat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main class="container">
+        <aside class="history" id="history">
+            <h3>Historique</h3>
+            <ul id="history-list"></ul>
+        </aside>
+
+
+        <section class="chat">
+            <header>
+                <h1>Assistant IA</h1>
+                <p class="sub">Posez une question — réponses en streaming</p>
+            </header>
+
+
+            <div id="messages" class="messages"></div>
+
+
+            <form id="chat-form" class="composer">
+                <textarea id="question" placeholder="Écrire votre message..." required></textarea>
+                <div class="controls">
+                    <button type="submit">Envoyer</button>
+                    <button type="button" id="clear">Effacer</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+
+    <script src="client.js"></script>
+</body>
+
+</html>
