@@ -1,0 +1,92 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - lab_net
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+
+  others:
+    image: 10.0.0.51:5000/myuser/fastapi-others:latest
+    ports:
+      - "5001:5000"   # port mapping utile pour debug; en prod laisser portainer
+    environment:
+      DATABASE_URL: "sqlite:///./data/chat.db"
+      OLLAMA_URL: "http://ollama:11434"
+    volumes:
+      - others-data:/app/data
+    networks:
+      - lab_net
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 5s
+      placement:
+        constraints:
+          - node.role == worker
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    secrets:
+      - db_password
+
+
+  web_experience:
+    image: nginx:stable
+    ports:
+      - "8082:80"
+    networks:
+      - lab_net
+    configs:
+      - source: nginx_config
+        target: /etc/nginx/conf.d/default.conf
+    volumes:
+      - web_html:/usr/share/nginx/html:ro
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+      placement:
+        constraints:
+          - node.role == worker
+
+
+
+configs:
+  nginx_config:
+    file: ../nginx/default.conf
+
+networks:
+  lab_net:
+    external: true
+
+volumes:
+  ollama-data:
+  others-data:
+  web_html:
+    driver: local
+
+secrets:
+  db_password:
+    external: true
