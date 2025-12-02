@@ -1,5 +1,6 @@
 # ./others/Dockerfile
 FROM python:3.13.9-slim
+#FROM nginx:stable
 
 WORKDIR /app
 
