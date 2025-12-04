@@ -23,10 +23,11 @@ tache réalisé:
 - Explorer différente option technologique
 - Faire un tableau des avantages , des limites et des domaine d'application des technologie
 - objectif:
-  -Commencer le document de rapport
+  - Commencer le document de rapport
   Apprentissage avec IA:
   Docker swarm:
-  Il pert met de garder la disponibilité du serveur en le déploiyen sur un autre serveur si il tombe en panne. Ils deploit tout les conteneurs sur plusieurs machine pour garder la disponibilité en créant un cluster qui regroupe ces machinesé Il ya au moin un manager qui controle le cluster et les autre machine son en worker ce sont ceux qui executes les conteneurs.
+
+  - Il pert met de garder la disponibilité du serveur en le déploiyen sur un autre serveur si il tombe en panne. Ils deploit tout les conteneurs sur plusieurs machine pour garder la disponibilité en créant un cluster qui regroupe ces machinesé Il ya au moin un manager qui controle le cluster et les autre machine son en worker ce sont ceux qui executes les conteneurs.
   Kubernetes:
 
 Ryan:
