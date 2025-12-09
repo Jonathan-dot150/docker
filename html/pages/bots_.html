@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Test personnalité</title>
+</head>
+<body>
+  <form id="quizForm">
+    <label>Choisissez votre profil :</label>
+    <select name="q3" required>
+      <option value="">— Choisir —</option>
+      <option value="creatif">Créatif</option>
+      <option value="logique">Logique</option>
+      <option value="aventurier">Aventurier</option>
+      <option value="empathique">Empathique</option>
+    </select>
+    <button type="submit">Voir mon profil</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    const profiles = {
+      creatif: "creative person",
+      logique: "analytical thinker",
+      aventurier: "adventurous traveler",
+      empathique: "empathetic friend"
+    };
+
+    async function fetchImage(query) {
+      const accessKey = "G3Z8Vy6dg25SGqsSGUZaI2MBoH4ivKM1dEaIEZagA6Q"; // Mets ta vraie clé ici
+      const url = `https://api.unsplash.com/photos/random?query=${encodeURIComponent(query)}&client_id=${accessKey}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data); // Debug: voir la réponse API
+      return data.urls.small;
+    }
+
+    document.getElementById("quizForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const data = new FormData(this);
+      const answers = Object.fromEntries(data.entries());
+
+      const profileKey = answers.q3;
+      const query = profiles[profileKey] || "personality portrait";
+
+      const imgUrl = await fetchImage(query);
+
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = `
+        <h2>Votre profil : ${profileKey}</h2>
+        <p>Basé sur vos réponses, vous êtes plutôt <strong>${profileKey}</strong>.</p>
+        <img src="${imgUrl}" alt="${profileKey}">
+      `;
+    });
+  </script>
+</body>
+</html>

@@ -50,9 +50,8 @@ services:
       retries: 3
     secrets:
       - db_password
-
   web_experience:
-    image: nginx:latest
+    image: myuser/nginx-web:latest
     ports:
       - "8082:80"
     networks:
@@ -73,25 +72,20 @@ services:
         constraints:
           - node.role == worker
 
+
 configs:
   nginx_config:
-    file: ../nginx/default.conf   # chemin relatif vers ton fichier conf
-
-# file: opt/web_experiences/docker/nginx/default.conf
+    file: opt/web_experiences/docker/nginx/default.conf
 
 networks:
   reseau_swarn:
     external: true
 
 volumes:
-  web_html:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ../html        # chemin relatif vers ton dossier html
   ollama-data:
   others-data:
+  web_html:
+    driver: local
 
 secrets:
   db_password:
