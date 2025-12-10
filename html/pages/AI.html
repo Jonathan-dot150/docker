@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Test personnalité + IA</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #4a90e2, #9013fe);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin-top: 30px;
+      font-size: 32px;
+    }
+
+    /* ---- Quiz Card ---- */
+    .card {
+      background: #ffffff22;
+      padding: 25px;
+      border-radius: 15px;
+      margin-top: 20px;
+      width: 400px;
+      backdrop-filter: blur(10px);
+    }
+
+    select,
+    button,
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 15px;
+    }
+
+    button {
+      background: #00e676;
+      cursor: pointer;
+      font-weight: bold;
+      transition: .3s;
+    }
+
+    button:hover {
+      background: #00c853;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+
+    /* ---- Chat ----*/
+    #chatBox {
+      display: none;
+      width: 400px;
+      margin-top: 20px;
+      background: #ffffff22;
+      padding: 20px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+    }
+
+    .messages {
+      height: 200px;
+      overflow-y: auto;
+      background: #ffffff11;
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .msgUser {
+      text-align: right;
+      color: #00ff9d;
+      margin: 5px 0;
+    }
+
+    .msgAI {
+      text-align: left;
+      color: #ffdede;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🔮 Test de personnalité + Chat IA</h1>
+
+  <div class="card">
+    <form id="quizForm">
+      <label>Choisissez votre profil :</label>
+      <select name="q3" required>
+        <option value="">— Choisir —</option>
+        <option value="creatif">Créatif</option>
+        <option value="logique">Logique</option>
+        <option value="aventurier">Aventurier</option>
+        <option value="empathique">Empathique</option>
+      </select>
+      <button type="submit">Voir mon profil</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <!-- CHAT IA -->
+  <div id="chatBox">
+    <h3>💬 Discute avec ton IA</h3>
+    <div class="messages" id="chatMessages"></div>
+    <input type="text" id="userInput" placeholder="Écris ton message..." />
+    <button id="sendBtn">Envoyer</button>
+  </div>
+
+  <script type="module">
+    import { getConfig } from "./config.js";
+
+    // Récupérer seulement SECRET_KEY
+    const UNSPLASH_TOKEN = await getConfig("UNSPLASH_TOKEN");
+    // Plus tard, tu peux demander l'autre sans re-fetch
+    const API_OPENAI = await getConfig("API_OPENAI");
+
+    const profiles = {
+      creatif: "creative person",
+      logique: "analytical thinker",
+      aventurier: "adventurous traveler",
+      empathique: "empathetic friend"
+    };
+
+    async function fetchImage(query) {
+      const accessKey = `${UNSPLASH_TOKEN}`; // ➜ Mets ta vraie clé
+      const url = `https://api.unsplash.com/photos/random?query=${encodeURIComponent(query)}&client_id=${accessKey}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      return data.urls.small;
+    }
+
+    document.getElementById("quizForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = new FormData(e.target);
+      const profileKey = data.get("q3");
+      const query = profiles[profileKey];
+
+      const img = await fetchImage(query);
+
+      document.getElementById("result").innerHTML = `
+      <h2>Votre profil : ${profileKey}</h2>
+      <p>Vous semblez être une personne <b>${profileKey}</b>.</p>
+      <img src="${img}" alt="${profileKey}">
+    `;
+
+      document.getElementById("chatBox").style.display = "block";
+    });
+
+
+    /* ─────────── CHAT IA ───────────  */
+    async function callAI(message, profil) {
+      const apiKey = `${API_OPENAI}`; // <--- Mets ta clé IA ici (Obligatoire)
+
+      const response = await fetch("https://api.openai.com/v1/responses", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + apiKey
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          input: [
+            { role: "system", content: `Tu es une IA qui parle comme une personne ${profil}.` },
+            { role: "user", content: message }
+          ]
+        })
+      });
+
+      const data = await response.json();
+
+      console.log("Réponse brute IA →", data);
+
+      return data.output_text ?? "Erreur réponse IA"; // 🔥 sortie correcte
+    }
+    document.getElementById("sendBtn").addEventListener("click", async () => {
+      const input = document.getElementById("userInput");
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      const profil = quizForm.q3.value;
+      addMessage(msg, "msgUser");
+      input.value = "";
+
+      const reply = await callAI(msg, profil);
+      addMessage(reply, "msgAI");
+    });
+
+    function addMessage(text, className) {
+      const box = document.getElementById("chatMessages");
+      box.innerHTML += `<div class="${className}">${text}</div>`;
+      box.scrollTop = box.scrollHeight;
+    }
+  </script>
+
+</body>
+
+</html>
